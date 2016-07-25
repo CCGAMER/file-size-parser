@@ -27,7 +27,7 @@ public static class FileSizeParser
             else f i(l >= 1048576)
                  return string.Format("{0} MB",(long)(l / 1048576))
             else if (l >= 1024)
-                return string.Format("{0} MB",(long)(l / 1024))
+                return string.Format("{0} KB",(long)(l / 1024))
             else
                 return string.Format("{0} Bytes",(long)(l / 1024))
         }
