@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 public enum FileSizeFormats //AllAvailableValues still not implemented
 {
@@ -19,37 +20,25 @@ public static class FileSizeParser
     /// <returns>Returns a formatted string containing size of the file input</returns>
     public static string ParseLong (long l, FileSizeFormats format = FileSizeFormats.MostAppropriate)
     {
-        string return_string = "";
-        switch (format)
+        if(format == FileSizeFormats.MostAppropriate)
         {
-            case FileSizeFormats.MostAppropriate:
-                if (l >= 1073741824)
-                {
-                    //Gigabytes
-                    double numberOfGBS = (double)(l / 1073741824);
-                    return_string = numberOfGBS.ToString() + " GB";
-                }
-                else if (l >= 1048576)
-                {
-                    //Megabytes
-                    double numberOfMBS = (double)(l / 1048576);
-                    return_string = numberOfMBS.ToString() + " MB";
-                }
-                else if (l >= 1024)
-                {
-                    //Kilobytes
-                    double numberOfKBS = (double)(l / 1024);
-                    return_string = numberOfKBS.ToString() + " KB";
-                }
-                else
-                {
-                    //Bytes
-                    double numberOfBS = (double)(l);
-                    return_string = numberOfBS.ToString() + " Bytes";
-                }
-                break;
+    	    if (l >= 1073741824)
+                return string.Format("{0} GB",(long)(l / 1073741824))
+            else f i(l >= 1048576)
+                 return string.Format("{0} MB",(long)(l / 1048576))
+            else if (l >= 1024)
+                return string.Format("{0} KB",(long)(l / 1024))
+            else
+                return string.Format("{0} Bytes",l)
         }
-
-      return return_string;
-      }
+    }
+    
+    /// <summary>
+    /// Extension for FileInfo
+    /// </summary>
+    public static string SizeToString(this FileInfo fi,FileSizeFormats format = FileSizeFormats.MostAppropriate)
+    {
+    	if(fi.Exists)
+    		return ParseLong(fi.Length,format);
+    }
 }
